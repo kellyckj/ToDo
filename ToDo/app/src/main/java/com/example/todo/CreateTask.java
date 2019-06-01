@@ -34,8 +34,9 @@ public class CreateTask extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CreateTask.this,BottomNavigation.class);
-                intent.putExtra("tag",true);
+                Intent intent = new Intent(CreateTask.this,BottomNavigation.class).
+                        setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("flag",true);
                 finish();
                 startActivity(intent);
 //                Fragment fragment = new DashboardFragment();

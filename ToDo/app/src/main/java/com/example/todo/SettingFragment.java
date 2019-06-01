@@ -18,9 +18,12 @@ public class SettingFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_setting, container, false);
 
         final TextView user = v.findViewById(R.id.user_name);
-//        String username = LoginActivity.findViewById(R.id.email).getText().toString();
-//        user.setText(username);
+        String username = "";
 
+        if (getArguments() != null) {
+            username = getArguments().getString("username");
+        }
+        user.setText(username);
         return v;
     }
 

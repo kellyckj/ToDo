@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import static android.app.Activity.RESULT_OK;
+
 public class HomeFragment extends Fragment implements View.OnClickListener{
 
     @Override
@@ -26,7 +28,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         // Code here executes on main thread after user presses button
-        startActivity(new Intent(getActivity(), CreateTask.class));
+        startActivityForResult(new Intent(getActivity(), CreateTask.class), 0);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            int latitude = data.getIntExtra("latitude", 0);
+            int longitude = data.getIntExtra("longitude", 0);
+            // do something with B's return values
+        }
+    }
 }

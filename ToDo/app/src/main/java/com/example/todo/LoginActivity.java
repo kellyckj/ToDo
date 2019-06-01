@@ -201,7 +201,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
-            startActivity(new Intent(this, BottomNavigation.class));
+            Intent in = new Intent(this, BottomNavigation.class).putExtra("username",email).
+                    setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(in);
         }
     }
 
