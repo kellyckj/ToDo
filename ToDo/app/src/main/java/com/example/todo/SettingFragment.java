@@ -7,28 +7,23 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-public class HomeFragment extends Fragment {
+public class SettingFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View v = inflater.inflate(R.layout.fragment_setting, container, false);
+
+        final TextView user = v.findViewById(R.id.user_name);
+//        String username = LoginActivity.findViewById(R.id.email).getText().toString();
+//        user.setText(username);
+
+        return v;
     }
 
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-////        final Button button = findViewById(R.id.button3);
-////        button.setOnClickListener(new View.OnClickListener() {
-////            public void onClick(View v) {
-////                // Code here executes on main thread after user presses button
-////                startActivity(new Intent(BottomNavigation.this, CreateTask.class));
-////            }
-////        });
-//    }
 
 }

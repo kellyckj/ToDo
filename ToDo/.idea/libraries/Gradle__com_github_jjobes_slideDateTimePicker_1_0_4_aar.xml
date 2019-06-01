@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.jjobes:slideDateTimePicker:1.0.4@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/slideDateTimePicker-1.0.4.aar/110980b1263ccdf15bee3f8d0ae7d426/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/slideDateTimePicker-1.0.4.aar/110980b1263ccdf15bee3f8d0ae7d426/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.jjobes/slideDateTimePicker/1.0.4/764b27391f1009b06444efe11f9a6a90ef999781/slideDateTimePicker-1.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
