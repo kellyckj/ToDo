@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.SimpleDateFormat;
 
 
@@ -16,6 +19,9 @@ public class CreateTask extends AppCompatActivity {
 
     private SimpleDateFormat mFormatter = new SimpleDateFormat("MMMM dd yyyy hh:mm aa");
     private Button button;
+
+    private DatabaseReference mDatabase;
+    mDatabase = FirebaseDatabase.getInstance().getReference();
 
 //    private void setFragment(Fragment fragment) {
 //        getSupportFragmentManager().beginTransaction().add(R.id.my_frame,
@@ -38,7 +44,8 @@ public class CreateTask extends AppCompatActivity {
                         setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.putExtra("flag",true);
                 finish();
-                startActivity(intent);
+//                finishActivity(0);
+//                startActivity(intent);
 //                Fragment fragment = new DashboardFragment();
 //                startActivity(new Intent(CreateTask.this, StartDashboard.class));
 
@@ -50,137 +57,24 @@ public class CreateTask extends AppCompatActivity {
         });
     }
 
+    public class Task {
 
+        public String title;
+        public String due_date;
+        public String description;
 
+        public Task() {
+            // Default constructor required for calls to DataSnapshot.getValue(User.class)
+            title = "";
+            due_date = "";
+            description = "";
+        }
 
+        public Task(String title, String due_date, String description) {
+            this.title = title;
+            this.due_date = due_date;
+            this.description = description;
+        }
+    }
 
-
-
-
-//    private SimpleDateFormat mFormatter = new SimpleDateFormat("MM dd yyyy hh:mm aa");
-//    private EditText edittext;
-//    private Button mButton;
-//
-//    private SlideDateTimeListener listener = new SlideDateTimeListener() {
-//
-//        @Override
-//        public void onDateTimeSet(Date date)
-//        {
-//            mButton.setText("Click Me !");
-////            Toast.makeText(CreateTask.this,
-////                    mFormatter.format(date), Toast.LENGTH_SHORT).show();
-//        }
-//
-//        // Optional cancel listener
-////        @Override
-////        public void onDateTimeCancel()
-////        {
-////            Toast.makeText(CreateTask.this,
-////                    "Canceled", Toast.LENGTH_SHORT).show();
-////        }
-//    };
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState)
-//    {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_create_task);
-//
-//        edittext = (EditText) findViewById(R.id.date);
-//        mButton = (Button) findViewById(R.id.buttona);
-//        mButton.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v)
-//            {
-////                Calendar calendar = Calendar.getInstance();
-////                calendar.setTime(new Date());
-////                calendar.add(Calendar.MONTH, 1);
-////                Date seventhDay = calendar.getTime();
-//
-//                String mFormatter = "MM dd yyyy hh:mm aa";
-//                SimpleDateFormat sdf = new SimpleDateFormat(mFormatter);
-////                edittext.setText(sdf.format(calendar.getTime()));
-//
-//                new SlideDateTimePicker.Builder(getSupportFragmentManager())
-//                        .setListener(listener)
-//                        .setInitialDate(new Date())
-//                        .setMinDate(new Date())
-////                        .setMaxDate(seventhDay)
-//                        .setIs24HourTime(false)
-//                        .setTheme(SlideDateTimePicker.HOLO_DARK)
-//                        .setIndicatorColor(Color.parseColor("#990000"))
-//                        .build()
-//                        .show();
-//            }
-//        });
-//    }
-
-
-
-
-
-
-//    final SimpleDateFormat mFormatter = new SimpleDateFormat("MMMM dd yyyy hh:mm aa");
-//    //        final Button mButton = (Button) findViewById(R.id.buttona);
-//    final EditText edittext = (EditText) findViewById(R.id.date);
-//
-//    final SlideDateTimeListener listener = new SlideDateTimeListener() {
-//
-//        @Override
-//        public void onDateTimeSet(Date date) {
-//            Toast.makeText(CreateTask.this,
-//                    mFormatter.format(date), Toast.LENGTH_SHORT).show();
-////               updateLabel();
-////            edittext.setText(
-//
-//        }
-//
-//        // Optional cancel listener
-//        @Override
-//        public void onDateTimeCancel() {
-//            Toast.makeText(CreateTask.this,
-//                    "Canceled", Toast.LENGTH_SHORT).show();
-//        }
-//    };
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_create_task);
-//
-//
-////        public boolean onOptionsItemSelected(MenuItem item){
-////            Intent myIntent = new Intent(getApplicationContext(), MyActivity.class);
-////            startActivityForResult(myIntent, 0);
-////            return true;
-////        }
-//
-//        edittext.setOnClickListener(new OnClickListener() {
-//            public void onClick(View v) {
-//                new SlideDateTimePicker.Builder(getSupportFragmentManager())
-//                        .setListener(listener)
-//                        .setInitialDate(new Date())
-//                        //.setMinDate(minDate)
-//                        //.setMaxDate(maxDate)
-//                        .setIs24HourTime(true)
-//                        //.setTheme(SlideDateTimePicker.HOLO_DARK)
-//                        //.setIndicatorColor(Color.parseColor("#990000"))
-//                        .build()
-//                        .show();
-//            }
-//        });
-//    }
-
-
-
-
-
-
-//    private void updateLabel () {
-//        String mFormatter = "MM dd yyyy hh:mm aa";
-//        SimpleDateFormat sdf = new SimpleDateFormat(mFormatter);
-//
-//        mButton.setText(sdf.format(calendar.getTime()));
-//    }
 }
