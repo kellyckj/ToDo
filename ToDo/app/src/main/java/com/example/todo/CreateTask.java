@@ -22,84 +22,30 @@ public class CreateTask extends AppCompatActivity {
 
 //    private SimpleDateFormat mFormatter = new SimpleDateFormat("MMMM dd yyyy hh:mm aa");
     private Button button;
-
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-
-//    private void setFragment(Fragment fragment) {
-//        getSupportFragmentManager().beginTransaction().add(R.id.my_frame,
-//                fragment).commit();
-//    }
-
-    public class Task {
-
-        private String title;
-        private String due_date;
-        private String description;
-
-        public Task() {
-            // Default constructor required for calls to DataSnapshot.getValue(User.class)
-        }
-
-        public Task(String title, String due_date, String description) {
-            this.title = title;
-            this.due_date = due_date;
-            this.description = description;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public String getDue_date() {
-            return due_date;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public void setDue_date(String due_date) {
-            this.due_date = due_date;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-    }
+    static String mGroupId;
 
     public boolean writeNewTask(String title, String due_date, String description) {
         Task task = new Task(title, due_date, description);
         final boolean[] flag = new boolean[1];
-//        if (title == "" || due_date == "")
-//            return false;
-        mDatabase.push().setValue(task);
-//        mDatabase.child("tasks").setValue(task)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        flag[0] = true;
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        // Write failed
-//                        flag[0] = false;
-//                    }
-//                });
-//        return flag[0];
+        if (title == "" || due_date == "")
+            return false;
+//        mGroupId = mDatabase.child("Tasks").push().getKey();
+//        mDatabase.child(mGroupId).setValue(task);
+        mDatabase = mDatabase.child("Tasks").push();
+        mGroupId = mDatabase.getKey();
+        mDatabase.setValue(task);
         return true;
+    }
+
+    public static String getUserID() {
+        return mGroupId;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_create_task);
 
         button = (Button) findViewById(R.id.submit);
