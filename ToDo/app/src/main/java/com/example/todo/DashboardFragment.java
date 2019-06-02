@@ -25,20 +25,32 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.core.Constants;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import com.example.todo.CreateTask;
 import com.google.firebase.database.core.Context;
 
 import static android.support.constraint.Constraints.TAG;
+import static com.example.todo.CreateTask.getUserID;
 
 public class DashboardFragment extends Fragment {
 
     private View v;
+//    View view;
     private RecyclerView mRecView;
+//    View_Holder holder;
 
     private DatabaseReference ContacsRef;
     private FirebaseAuth mAuth;
+
+    List<Task> list;
+    List<String> titles;
+//    ArrayList<String> titles= new ArrayList<>();
+    ArrayList<String> dates= new ArrayList<>();
+    ArrayList<String> descriptions= new ArrayList<>();
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -49,13 +61,15 @@ public class DashboardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_dashboard, container, false);
+//        view = LayoutInflater.from(container.getContext()).inflate(R.layout.card_view, container, false);
+//        holder = new View_Holder(view);
 
         mRecView = (RecyclerView) v.findViewById(R.id.rec_view);
         mRecView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mAuth = FirebaseAuth.getInstance();
 
-        ContacsRef = FirebaseDatabase.getInstance().getReference().child("Tasks");
+        ContacsRef = FirebaseDatabase.getInstance().getReference().child("Tasks");//.child(getUserID());
 
         return v;
     }
@@ -69,41 +83,54 @@ public class DashboardFragment extends Fragment {
         FirebaseRecyclerOptions options =
                 new FirebaseRecyclerOptions.Builder<Task>()
                         .setQuery(ContacsRef, Task.class)
+//                        .orderByChild("due_date")
                         .build();
 
-
+//        final Recycler_View_Adapter adapter
+//                = new Recycler_View_Adapter(options) {
         final FirebaseRecyclerAdapter<Task, View_Holder> adapter
                 = new FirebaseRecyclerAdapter<Task, View_Holder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull final View_Holder holder, int position, @NonNull Task model)
             {
-                final String userIDs = getRef(position).getKey();
-
-                ContacsRef.child(userIDs).addValueEventListener(new ValueEventListener() {
+//                final String userIDs = getRef(position).getKey();
+                ContacsRef.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot)
-                    {
-                        ArrayList<String> titles= new ArrayList<>();
-                        ArrayList<String> dates= new ArrayList<>();
-                        ArrayList<String> descriptions= new ArrayList<>();
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        if (dataSnapshot.exists()) {
+//                            int counter = 0;
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//                            if(counter == 2) {//ds.exists()) {
+//                                break;
+//                            }
+//                                Task k = ds.getValue(Task.class);
+//                                list.add(k);
 
-                        for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                            String t = ds.child("title").getValue(String.class);
-                            titles.add(t);
+                                String t = ds.child("title").getValue(String.class);//.toString();
+//                                titles.add(t);
+//
+//                                TextView stringTextView = (TextView) v.findViewById(R.id.textView);
+//////                             stringTextView.getText().toString()
+//                                stringTextView.setText(String.valueOf(counter));
+//
+                                String d = ds.child("due_date").getValue(String.class);//.toString();
+//                            dates.add(d);
+                                String des = ds.child("description").getValue(String.class);//.toString();
+//                            descriptions.add(des);
+//
+//                            //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
+                                holder.title.setText(t);//list.get(position).getTitle());
+                                holder.date.setText(d);//list.get(position).getDue_date());
+                                holder.description.setText(des);//list.get(position).getDescription());
+//
+                                Log.d("TAG", t + " / " + d + " / " + des);
+//                            list.add(new Task(t,d,des));
+//                                counter++;
 
-        //                    TextView stringTextView = (TextView) v.findViewById(R.id.rec_view);
-                            // stringTextView.getText().toString()
-        //                    stringTextView.setText(title + " , ");
-
-                            String d = ds.child("due_date").getValue(String.class);
-                            dates.add(d);
-                            String des = ds.child("description").getValue(String.class);
-                            descriptions.add(des);
-
-
-                            Log.d("TAG", t + " / " + d + " / " + des);
-                        }
+                            }
+//                        }
                     }
+
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -117,30 +144,26 @@ public class DashboardFragment extends Fragment {
             public View_Holder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i)
             {
                 View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_view, viewGroup, false);
-                View_Holder viewHolder = new View_Holder(view);
-                return viewHolder;
+                View_Holder holder = new View_Holder(view);
+//                TextView stringTextView = (TextView) v.findViewById(R.id.textView);
+//                stringTextView.setText(String.valueOf(titles.size()));//String.valueOf(i));
+//
+//                Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
+//                holder.title.setText(model.getTitle());//list.get(position).getTitle());
+//                holder.date.setText(model.getDue_date());//list.get(position).getDue_date());
+//                holder.description.setText(model.getDescription());//list.get(position).getDescription());
+//                holder.title.setText(list.get(i).getTitle());
+//                holder.date.setText(list.get(i).getDue_date());
+//                holder.description.setText(list.get(i).getDescription());
+//                holder.title.setText(titles.get(1));
+//                holder.date.setText(list.get(i).getDue_date());
+//                holder.description.setText(list.get(i).getDescription());
+                return holder;
             }
         };
 
         mRecView.setAdapter(adapter);
         adapter.startListening();
-    }
-
-
-    public static class View_Holder extends RecyclerView.ViewHolder
-    {
-        CardView cv;
-        TextView title;
-        TextView date;
-        TextView description;
-
-        public View_Holder(View itemView) {
-            super(itemView);
-            cv = (CardView) itemView.findViewById(R.id.card);
-            title = (TextView) itemView.findViewById(R.id.task_name);
-            date = (TextView) itemView.findViewById(R.id.date);
-            description = (TextView) itemView.findViewById(R.id.description_text);
-        }
     }
 }
 

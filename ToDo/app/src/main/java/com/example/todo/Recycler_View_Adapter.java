@@ -39,46 +39,52 @@ public class Recycler_View_Adapter extends RecyclerView.Adapter<View_Holder> {
         View_Holder holder = new View_Holder(v);
         return holder;
 
+//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
+//        View_Holder holder = new View_Holder(view);
+//        //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
+//        holder.title.setText(list.get(viewType).getTitle());//list.get(position).getTitle());
+//        holder.date.setText(list.get(viewType).getDue_date());//list.get(position).getDue_date());
+//        holder.description.setText(list.get(viewType).getDescription());//list.get(position).getDescription());
+//        return holder;
     }
 
     @Override
     public void onBindViewHolder(final View_Holder holder, final int position) {
 
-//        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Tasks");
-//
-//        ValueEventListener eventListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                ArrayList<String> titles= new ArrayList<>();
-//                ArrayList<String> dates= new ArrayList<>();
-//                ArrayList<String> descriptions= new ArrayList<>();
-//
-//                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-//                    String t = ds.child("title").getValue(String.class);
-//                    titles.add(t);
-//
-////                    TextView stringTextView = (TextView) v.findViewById(R.id.rec_view);
-//                    // stringTextView.getText().toString()
-////                    stringTextView.setText(title + " , ");
-//
-//                    String d = ds.child("due_date").getValue(String.class);
-//                    dates.add(d);
-//                    String des = ds.child("description").getValue(String.class);
-//                    descriptions.add(des);
-//
-//                    Log.d("TAG", t + " / " + d + " / " + des);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {}
-//        };
-//        mDatabase.addListenerForSingleValueEvent(eventListener);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Tasks");
 
-        //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
-        holder.title.setText("hello");//list.get(position).getTitle());
-        holder.date.setText("today");//list.get(position).getDue_date());
-        holder.description.setText("stress");//list.get(position).getDescription());
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String t = ds.child("title").getValue(String.class);
+//                    titles.add(t);
+
+//                    TextView stringTextView = (TextView) v.findViewById(R.id.rec_view);
+                    // stringTextView.getText().toString()
+//                    stringTextView.setText(title + " , ");
+
+                    String d = ds.child("due_date").getValue(String.class);
+//                    dates.add(d);
+                    String des = ds.child("description").getValue(String.class);
+//                    descriptions.add(des);
+
+                    list.add(new Task(t,d,des));
+
+                    Log.d("TAG", t + " / " + d + " / " + des);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        mDatabase.addListenerForSingleValueEvent(eventListener);
+
+//        Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
+//        holder.title.setText(list.get(position).getTitle());
+//        holder.date.setText(list.get(position).getDue_date());
+//        holder.description.setText(list.get(position).getDescription());
     }
 
     @Override
