@@ -11,6 +11,8 @@ import android.widget.EditText;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -27,6 +29,71 @@ public class CreateTask extends AppCompatActivity {
 //        getSupportFragmentManager().beginTransaction().add(R.id.my_frame,
 //                fragment).commit();
 //    }
+
+    public class Task {
+
+        private String title;
+        private String due_date;
+        private String description;
+
+        public Task() {
+            // Default constructor required for calls to DataSnapshot.getValue(User.class)
+        }
+
+        public Task(String title, String due_date, String description) {
+            this.title = title;
+            this.due_date = due_date;
+            this.description = description;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getDue_date() {
+            return due_date;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public void setDue_date(String due_date) {
+            this.due_date = due_date;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+    }
+
+    public boolean writeNewTask(String title, String due_date, String description) {
+        Task task = new Task(title, due_date, description);
+        final boolean[] flag = new boolean[1];
+//        if (title == "" || due_date == "")
+//            return false;
+        mDatabase.push().setValue(task);
+//        mDatabase.child("tasks").setValue(task)
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        flag[0] = true;
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        // Write failed
+//                        flag[0] = false;
+//                    }
+//                });
+//        return flag[0];
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,12 +113,21 @@ public class CreateTask extends AppCompatActivity {
                 String title = name.getText().toString();
                 String date = due_date.getText().toString();
                 String description = desc.getText().toString();
-//                boolean ret = writeNewTask(title, date, description);
 
-                mDatabase = mDatabase.child("task");
-                mDatabase.child("description").setValue(description);
-                mDatabase.child("due date").setValue(date);
-                mDatabase.child("title").setValue(title);
+                //make it so it saves under the user ID
+//                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//                String id = user.getUid();
+
+                boolean ret = writeNewTask(title, date, description);
+
+//                Task task = new Task(title, date, description);
+//                mDatabase.child("tasks").setValue(task);
+
+
+//                mDatabase = mDatabase.child("task");
+//                mDatabase.child("description").setValue(description);
+//                mDatabase.child("due date").setValue(date);
+//                mDatabase.child("title").setValue(title);
 
                 Intent intent = new Intent(CreateTask.this,BottomNavigation.class).
                         setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -68,47 +144,6 @@ public class CreateTask extends AppCompatActivity {
 //                        new DashboardFragment()).commit();
             }
         });
-    }
-
-    public class Task {
-
-        private String title;
-        private String due_date;
-        private String description;
-
-        private Task() {
-            // Default constructor required for calls to DataSnapshot.getValue(User.class)
-        }
-
-        private Task(String title, String due_date, String description) {
-            this.title = title;
-            this.due_date = due_date;
-            this.description = description;
-        }
-    }
-
-    public boolean writeNewTask(String title, String due_date, String description) {
-        Task task = new Task(title, due_date, description);
-        final boolean[] flag = new boolean[1];
-        if (title == "" || due_date == "")
-            return false;
-        mDatabase.child("tasks").setValue(task);
-//        mDatabase.child("tasks").setValue(task)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        flag[0] = true;
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        // Write failed
-//                        flag[0] = false;
-//                    }
-//                });
-//        return flag[0];
-        return  true;
     }
 
 
