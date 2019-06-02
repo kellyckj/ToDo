@@ -3,25 +3,25 @@ package com.example.todo;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.text.SimpleDateFormat;
 
 
 @SuppressLint("SimpleDateFormat")
 public class CreateTask extends AppCompatActivity {
 
-    private SimpleDateFormat mFormatter = new SimpleDateFormat("MMMM dd yyyy hh:mm aa");
+//    private SimpleDateFormat mFormatter = new SimpleDateFormat("MMMM dd yyyy hh:mm aa");
     private Button button;
 
-    private DatabaseReference mDatabase;
-    mDatabase = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
 //    private void setFragment(Fragment fragment) {
 //        getSupportFragmentManager().beginTransaction().add(R.id.my_frame,
@@ -40,6 +40,19 @@ public class CreateTask extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EditText name = (EditText) findViewById(R.id.task_name);
+                EditText due_date = (EditText) findViewById(R.id.date);
+                EditText desc = (EditText) findViewById(R.id.description_text);
+                String title = name.getText().toString();
+                String date = due_date.getText().toString();
+                String description = desc.getText().toString();
+//                boolean ret = writeNewTask(title, date, description);
+
+                mDatabase = mDatabase.child("task");
+                mDatabase.child("description").setValue(description);
+                mDatabase.child("due date").setValue(date);
+                mDatabase.child("title").setValue(title);
+
                 Intent intent = new Intent(CreateTask.this,BottomNavigation.class).
                         setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.putExtra("flag",true);
@@ -59,22 +72,44 @@ public class CreateTask extends AppCompatActivity {
 
     public class Task {
 
-        public String title;
-        public String due_date;
-        public String description;
+        private String title;
+        private String due_date;
+        private String description;
 
-        public Task() {
+        private Task() {
             // Default constructor required for calls to DataSnapshot.getValue(User.class)
-            title = "";
-            due_date = "";
-            description = "";
         }
 
-        public Task(String title, String due_date, String description) {
+        private Task(String title, String due_date, String description) {
             this.title = title;
             this.due_date = due_date;
             this.description = description;
         }
     }
+
+    public boolean writeNewTask(String title, String due_date, String description) {
+        Task task = new Task(title, due_date, description);
+        final boolean[] flag = new boolean[1];
+        if (title == "" || due_date == "")
+            return false;
+        mDatabase.child("tasks").setValue(task);
+//        mDatabase.child("tasks").setValue(task)
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        flag[0] = true;
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        // Write failed
+//                        flag[0] = false;
+//                    }
+//                });
+//        return flag[0];
+        return  true;
+    }
+
 
 }

@@ -18,7 +18,7 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/user_info"
+        android:id="@+id/task_info"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="53dp"
@@ -45,10 +45,10 @@
         android:text="Title: "
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_info" />
+        app:layout_constraintTop_toBottomOf="@+id/task_info" />
 
     <EditText
-        android:id="@+id/user_name"
+        android:id="@+id/task_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -59,7 +59,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/title"
-        app:layout_constraintTop_toBottomOf="@+id/user_info" />
+        app:layout_constraintTop_toBottomOf="@+id/task_info" />
 
     <TextView
         android:id="@+id/due_date"
@@ -86,7 +86,7 @@
         android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/due_date"
-        app:layout_constraintTop_toBottomOf="@+id/user_name" />
+        app:layout_constraintTop_toBottomOf="@+id/task_name" />
     <!--android:hint="@string/select_date_time"-->
     <!--android:focusable="false"-->
     <!--android:clickable="true"-->

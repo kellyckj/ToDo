@@ -4,12 +4,13 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.example.todo"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -37,5 +38,8 @@ dependencies {
     implementation 'com.github.jjobes:slideDateTimePicker:1.0.4'
     implementation 'com.google.firebase:firebase-core:16.0.9'
     implementation 'com.google.firebase:firebase-database:17.0.0'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.google.firebase:firebase-auth:17.0.0'
 }
 apply plugin: 'com.google.gms.google-services'

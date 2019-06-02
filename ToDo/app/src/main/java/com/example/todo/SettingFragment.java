@@ -17,7 +17,7 @@ public class SettingFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_setting, container, false);
 
-        final TextView user = v.findViewById(R.id.user_name);
+        final TextView user = v.findViewById(R.id.task_name);
         String username = "";
 
         if (getArguments() != null) {
