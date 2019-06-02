@@ -15,11 +15,16 @@ import static android.app.Activity.RESULT_OK;
 
 public class HomeFragment extends Fragment implements View.OnClickListener{
 
+    String username = "";
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_home, container, false);
+        if (getArguments() != null) {
+            username = getArguments().getString("username");
+        }
 
         final Button button = v.findViewById(R.id.button2);
         button.setOnClickListener(this);
@@ -30,28 +35,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         // Code here executes on main thread after user presses button
-        startActivityForResult(new Intent(getActivity(), CreateTask.class), 0);
+        startActivityForResult(new Intent(getActivity(), CreateTask.class).putExtra("username",username).
+                setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT), 0);
     }
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == 0 && resultCode == RESULT_OK) {
-////            int latitude = data.getIntExtra("latitude", 0);
-////            int longitude = data.getIntExtra("longitude", 0);
-////            // do something with B's return values
-//
-//            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//            fragmentManager.popBackStack ("SETTING", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//
-////            FragmentManager fragmentManager = getSupportFragmentManager();
-////            dashboard = fragmentManager.findFragmentByTag("DASHBOARD");
-////            if (dashboard == null) {
-////                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-////                        new DashboardFragment(), "DASHBOARD").addToBackStack("DASHBOARD").commit();
-////            } else {
-////                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-////                        dashboard).commit();
-////            }
-//        }
-//    }
 }
