@@ -19,7 +19,6 @@ public class SettingFragment extends Fragment {
 
         final TextView user = v.findViewById(R.id.task_name);
         String username = "";
-
         if (getArguments() != null) {
             username = getArguments().getString("username");
         }
